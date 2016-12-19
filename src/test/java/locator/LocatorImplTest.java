@@ -19,7 +19,23 @@ public class LocatorImplTest {
 
     @Test
     public void getIndexEmpty() throws Exception {
-        String[] data = {};
+        String[] data1 = {};
+        assertEquals(-1, impl.getIndex("a", data1));
+        String[] data2 = {null, "a", "b"};
+        assertEquals(-1, impl.getIndex("a", data2));
+        String[] data3 = {"a", "b", null};
+        assertEquals(-1, impl.getIndex("a", data3));
+        //
+        // problem here. If a null is found in but not at the ends then incorrectly sorted ?
+        String[] data4 = {"a", null, "b"};
+        assertEquals(-1, impl.getIndex("a", data4));
+        String[] data5 = {"a", "b", null, "c", "d"};
+        assertEquals(-1, impl.getIndex("a", data5));
+    }
+
+    @Test
+    public void getNullsGalore() throws Exception {
+        String[] data = {null};
         assertEquals(-1, impl.getIndex("a", data));
     }
 
